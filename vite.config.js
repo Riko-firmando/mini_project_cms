@@ -10,6 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  base: "/mini_project_cms/",
   server: {
     proxy: {
       "/api": {
