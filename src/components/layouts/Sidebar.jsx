@@ -14,7 +14,7 @@ import useAuthStore from "../../store/authStore";
 const Sidebar = () => {
   const location = useLocation();
   const menuItems = [
-    { path: "/home", icon: LayoutDashboard, label: "Home" },
+    { path: "/", icon: LayoutDashboard, label: "Home" },
     { path: "/products", icon: Calendar, label: "Products" },
   ];
   const { logout } = useAuthStore();

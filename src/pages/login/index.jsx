@@ -29,12 +29,9 @@ const LoginPage = () => {
         username: formData.username,
         password: formData.password,
       });
-
-      // Simpan ke Zustand (Otomatis tersimpan di LocalStorage karena 'persist')
       setAuth(response.data);
 
-      // Redirect ke Dashboard/Home
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       setError(
         err.response?.data?.message ||

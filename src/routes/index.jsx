@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createHashRouter, Navigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 import LoginPage from "../pages/login";
 import HomePage from "../pages/home";
@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/login",
     element: <LoginPage />,
@@ -29,10 +29,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />,
-      },
-      {
-        path: "home",
         element: <HomePage />,
       },
       {
