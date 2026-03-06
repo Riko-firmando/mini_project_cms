@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuthStore from "../store/authStore";
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.DEV ? "/api" : "https://dummyjson.com",
 });
 
 api.interceptors.request.use((config) => {
