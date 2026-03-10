@@ -11,6 +11,44 @@ const Table = ({
   const safeLimit = limit > 0 ? limit : 10;
   const totalPages = Math.ceil(total / safeLimit) || 1;
 
+  const renderContent = () => {
+    if (loading) {
+      return [...Array(5)].map((_, i) => (
+        <tr key={`skeleton-${i}`} className="animate-pulse">
+          <td colSpan={columns.length} className="px-6 py-4">
+            <div className="h-4 bg-slate-200 rounded w-full"></div>
+          </td>
+        </tr>
+      ));
+    }
+
+    if (products.length > 0) {
+      return products.map((item) => (
+        <tr key={item.id} className="hover:bg-slate-50 transition">
+          {columns.map((col) => (
+            <td
+              key={`${item.id}-${col.key}`}
+              className="px-6 py-4 text-sm text-slate-700"
+            >
+              {col.render ? col.render(item) : item[col.key]}
+            </td>
+          ))}
+        </tr>
+      ));
+    }
+
+    return (
+      <tr>
+        <td
+          colSpan={columns.length}
+          className="px-6 py-12 text-center text-slate-500"
+        >
+          Tidak ada data ditemukan.
+        </td>
+      </tr>
+    );
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
@@ -27,39 +65,7 @@ const Table = ({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading ? (
-              [...Array(5)].map((_, i) => (
-                <tr key={`skeleton-${i}`} className="animate-pulse">
-                  <td colSpan={columns.length} className="px-6 py-4">
-                    <div className="h-4 bg-slate-200 rounded w-full"></div>
-                  </td>
-                </tr>
-              ))
-            ) : products.length > 0 ? (
-              products.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-50 transition">
-                  {columns.map((col) => (
-                    <td
-                      key={`${item.id}-${col.key}`}
-                      className="px-6 py-4 text-sm text-slate-700"
-                    >
-                      {col.render ? col.render(item) : item[col.key]}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={columns.length}
-                  className="px-6 py-12 text-center text-slate-500"
-                >
-                  Tidak ada data ditemukan.
-                </td>
-              </tr>
-            )}
-          </tbody>
+          <tbody className="divide-y divide-slate-100">{renderContent()}</tbody>
         </table>
       </div>
 
